@@ -7,8 +7,8 @@ with open("README.md", 'r') as readme:
     long_desc = readme.read()
 
 setuptools.setup(
-    name="PyCoLiMS",
-    version="0.5a1-21",
+    name="pycolims",
+    version="0.1",
     author="Daniel Paz Avalos",
     author_email="dpazavalos@protonmail.com",
     description="An importable, single stage CLI menu package",

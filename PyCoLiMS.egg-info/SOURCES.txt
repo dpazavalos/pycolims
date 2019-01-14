@@ -1,6 +1,0 @@
-README.md
-setup.py
-PyCoLiMS.egg-info/PKG-INFO
-PyCoLiMS.egg-info/SOURCES.txt
-PyCoLiMS.egg-info/dependency_links.txt
-PyCoLiMS.egg-info/top_level.txt
