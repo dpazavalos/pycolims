@@ -49,7 +49,4 @@ Also of note, SelectMulti is able to parse a given list in the same format, allo
 ### Final notes
 
 This project is still quite young; notable ToDos include wider type acceptance and confirmed stress testing.
-
-This project was inspired by old school "Green Screen" programs used on retail thin clinents. These lightweight programs always facinated me, and I loved navigating to deep submenus with a series of quick keystrokes.
-
-PyCoLiMS is still quite young; all feedback is appreciated. 
+Any and all feedback is appreciated!
