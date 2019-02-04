@@ -8,10 +8,10 @@ from pycolims.tools.customtypes import MentumList
 class Pages:
     """External storage of page contents"""
 
-    _only: _List[_List[str]] = None
-    _frst: _List[_List[str]] = None
-    _midl: _List[_List[str]] = None
-    _last: _List[_List[str]] = None
+    _only: _List[str] = None
+    _frst: _List[str] = None
+    _midl: _List[str] = None
+    _last: _List[str] = None
 
     opts: _List[str] = None
 
@@ -58,11 +58,14 @@ class Pages:
 
         self._only = self._validate_cmds(only_turners, DisplayCmd.turners)
         """Page Turners when items will all fit in terminal display space"""
-        self._frst = self._validate_cmds(frst_turners, DisplayCmd.turners)
+        # self._frst = self._validate_cmds(frst_turners, DisplayCmd.turners)
+        self._frst = [turner for turner in frst_turners]
         """First page Turners when items extend terminal display space"""
-        self._midl = self._validate_cmds(midl_turners, DisplayCmd.turners)
+        # self._midl = self._validate_cmds(midl_turners, DisplayCmd.turners)
+        self._midl = [turner for turner in midl_turners]
         """Middle pages Turners when items extend terminal display space"""
-        self._last = self._validate_cmds(last_turners, DisplayCmd.turners)
+        # self._last = self._validate_cmds(last_turners, DisplayCmd.turners)
+        self._last = [turner for turner in last_turners]
         """Last page turners when items extend terminal display space"""
         # self.opts = self._validate_cmds(page_options, DisplayCmd.options)
         self.opts = [cmd for cmd in page_options]

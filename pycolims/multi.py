@@ -26,11 +26,10 @@ class SelectMulti(_Menu):
         Sizes list according to term height, navigates pages,
         flips ( ) indicator based off displayer's return value"""
 
-        # Modify self.menu_list, preserving index [orig_ndx, *desired_item(s)]
+        # Modify self.menu_list, preserving index [orig_ndx, bool, *desired_item(s)]
         for ndx, item in enumerate(self.given_list):
             if isinstance(item, list):
                 if isinstance(item[0], bool):
-                    # sbool = '(*)' if self.given_list[ndx][0] is True else '( )'
                     self.given_list[ndx] = [ndx, item[0], item[1]]
             else:
                 self.given_list[ndx] = [ndx, False, item]

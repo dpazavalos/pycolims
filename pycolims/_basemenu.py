@@ -42,40 +42,41 @@ class _Menu:
         return nav_command in self.page.opts
 
     def displayer(self, itemlist: List[List[str]],
-                  turners: List[List[str]]) -> str:
+                  turners: List[str]) -> str:
         """Called by a Navigator function, displays a given list on screen, along with nav options\n
         Selected option must be one shown on screen"""
-        to_display: List[Union[List, Tuple]] = []       # ["0", "a"], ["+", "Next Page"]
+        to_display: List[Union[List, Tuple]] = []       # ["0", "a"], items to display
+        current_turners: List[str] = []
         valid_selections: List[str] = []                # String'd int entries for menu Values
 
-        # indexes of items passed through arg itemlist
         for item in itemlist:
             to_display.append(item)
             valid_selections.append(str(item[0]))       # ["0", "a"]
 
-        # Page turners ( ["+", "Next Page"] )
         for turner in turners:
-            to_display.append(turner)
-            if turner[0] != " ":
-                valid_selections.append(turner[0])
+            current_turners.append(turner)
+            if turner != " ":
+                valid_selections.append(turner)
 
-        # Add keys from active page opts
-        valid_selections += self.page.opts
+        # Add keys from activated page opts
+        for opt in self.page.opts:
+            valid_selections.append(opt)
 
         prompt: str = ''
         while prompt not in valid_selections:
+            self.term.clear()
+            print(self.header)
+            for item in to_display:
+                print(self.display_line(item))
+            for turner in current_turners:
+                print(self.display_line([turner, self.command_check.turners[turners]]))
+            for opt in self.page.opts:
+                print(self.option_line(opt), end=' ')
+
             try:
-                print(self.header)
-                # Write options on screen
-                for disp in to_display:
-                    print(self.display_line(disp))
-                for opt in self.page.opts:
-                    print(self.option_line(opt), end=' ')
                 prompt = input()
             except KeyboardInterrupt:
-                # Ensure interrupts can properly pass upwards
                 prompt = self.command_check.options_inv["Break"]
-            self.term.clear()
         return prompt
 
     def display_line(self, to_display: Union[List, Tuple]) -> str:
@@ -94,6 +95,13 @@ class _Menu:
             self.given_list = _deepcopy(to_handle)
         elif isinstance(to_handle, tuple):
             self.given_list = list(to_handle)
+
+    def command_handler(self, command: str):
+        """responsible for managing commands given back to navigator"""
+
+    def _cmd_break(self):
+        """Common command"""
+        raise KeyboardInterrupt
 
     def navigator(self) -> list:
         """Function to handle handoff of menu_in items to displayer\n

@@ -34,9 +34,6 @@ class SelectSingle(_Menu):
         handler = {self.command_check.options_inv["Break"]: self._cmd_break}
         handler[command]()
 
-    def _cmd_break(self):
-        raise KeyboardInterrupt
-
     def navigator(self):
         """Select Single Navigator
         Sizes list according to term height, navigates pages, returns a single selection"""
