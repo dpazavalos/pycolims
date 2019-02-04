@@ -6,9 +6,9 @@ from dataclasses import dataclass as _dc
 class Terminal:
     """External storage of starting terminal attributes"""
 
-    height: int
-    width: int
-    gap: int
+    height: int = None
+    width: int = None
+    gap: int = None
 
     def set(self):
         self.height: int = _get_terminal_size()[1]
