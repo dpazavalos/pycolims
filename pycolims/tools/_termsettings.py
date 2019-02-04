@@ -24,4 +24,6 @@ class TermFactory:
         return Terminal
 
     def new_terminal_obj(self):
-        return self._return_terminal_obj()
+        to_return = self._return_terminal_obj()
+        to_return.set()
+        return to_return

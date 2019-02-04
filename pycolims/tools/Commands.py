@@ -1,5 +1,6 @@
 """Storage for display commands. Used by displayer"""
 
+
 class DisplayCmd:
 
     turners = {
@@ -15,5 +16,9 @@ class DisplayCmd:
         '..': "Return Selected",
         '<>': "Break",
     }
-    """Possible menu choices to change pages"""
-
+    """Possible menu choices to change pages \n
+    '**': "Select All" \n
+    '!!': "Clear All" \n
+    '..': "Return all Selected" \n
+    '<>'
+    """

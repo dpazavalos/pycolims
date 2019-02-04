@@ -7,22 +7,23 @@ from pycolims.tools.Commands import DisplayCmd
 class Pages:
     """External storage of page contents"""
 
-    only: _List[str]
-    frst: _List[str]
-    midl: _List[str]
-    last: _List[str]
+    only: _List[_List[str]]
+    frst: _List[_List[str]]
+    midl: _List[_List[str]]
+    last: _List[_List[str]]
 
-    opts: _List[str]
+    opts: _List[_List[str]]
 
     @ staticmethod
-    def _validate_cmds(cmds: _List[str], valid_commands: _Dict[str, str]) -> _List[str]:
-        """Checks page cmds against valid_commands list, raises speficifc value error if not in"""
+    def _validate_cmds(cmds: _List[str], valid_commands: _Dict[str, str]) -> _List[_List[str]]:
+        """Checks page cmd keys against valid_commands list, returns in nested list with cmd names
+        Raises specific value error if not in"""
         to_return = []
         for c in cmds:
             if c not in valid_commands:
                 raise ValueError(f"{c} is not in {valid_commands}!")
             to_return.append(c)
-        return to_return
+        return [[cmd, valid_commands[cmd]] for cmd in to_return]
 
     def reset(self,
               only_turners: _List[str], frst_turners: _List[str],
