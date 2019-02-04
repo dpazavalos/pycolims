@@ -15,10 +15,10 @@ class Terminal:
     _clear_method: str = None
 
     def set(self):
-        self.height: int = _get_terminal_size()[1]
-        """Terminal height, used to determine # of items that can be displayed"""
         self.gap: int = 3
         """Additional gap for term height, to accommodate space for header and nav options"""
+        self.height: int = _get_terminal_size()[1] - self.gap
+        """Terminal height, used to determine # of items that can be displayed"""
 
         self._set_clear_method()
 
