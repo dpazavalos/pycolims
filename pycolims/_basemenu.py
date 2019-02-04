@@ -29,8 +29,6 @@ class _Menu:
 
         self.page: Factory.Pages = Factory.build.new_pages_obj()
 
-        self.statics: Factory.Statics = Factory.build.new_statics_obj()
-
         self.command_check = DisplayCmd()
 
     def generate_goto_multipliers(self) -> List[int]:
@@ -73,7 +71,7 @@ class _Menu:
                     print(f'({disp[0]})'.rjust(5), disp[1])
                 for opt in self.page.opts:
                     print(f'({opt})'.rjust(5), self.command_check.options[opt], end=' ')
-                self.statics.clear_screen()
+                self.term.clear()
                 prompt = input()
             except KeyboardInterrupt:
                 # Ensure interrupts can properly pass upwards

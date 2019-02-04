@@ -7,16 +7,24 @@ class SelectMulti(_Menu):
     [item for [boolean, item] in menu.run(menu_in) if boolean]\n\n
     Once init, call run()"""
 
+    @staticmethod
+    def flip_indicator(to_flip) -> str:
+        """Used to flip selection indications"""
+        return '(*)' if to_flip == '( )' else '( )'
+
+    def prep_page(self):
+        """Use self.page.reset to prepare page turners"""
+        self.page.reset(only_turners=[],
+                        frst_turners=['+'],
+                        midl_turners=['-', '+'],
+                        last_turners=['-', ],
+                        page_options=['**', '!!', '..', '<>'],
+                        goto_multipliers=self.generate_goto_multipliers())
+
     def navigator(self) -> list:
         """Select Multiple Navigator
         Sizes list according to term height, navigates pages,
         flips ( ) indicator based off displayer's return value"""
-
-        self.page.reset(only_turners=[' ', ' '],
-                        frst_turners=[' ', '+'],
-                        midl_turners=['-', '+'],
-                        last_turners=['-', ' '],
-                        page_options=['**', '!!', '..', '<>'])
 
         # Modify self.menu_list, preserving index [orig_ndx, *desired_item(s)]
         # Bools are converted to strings T '(*)', F '( )'
@@ -30,23 +38,18 @@ class SelectMulti(_Menu):
             else:
                 self.given_list[ndx] = [ndx, '( )', self.given_list[ndx]]
 
-        goto_multipliers = self.generate_goto_multipliers()
-        nav_options = self.generate_nav_options(goto_multipliers)
-
-        # Used to determine which section of menu_list to send
-        goto_multi = 0  # Multiply by self.term_height to determine starting index
         command = ""
         '''Command is the returned str from displayer, either a nav option or an item to trigger'''
 
         # Call Displayer to determine necessary selection(s)
-        self.clear_screen()
+        self.term.clear()
         while command != "..":
             disp_start = goto_multi * self.term_height
             command = self.displayer(self.given_list[disp_start: disp_start + self.term_height],
                                      nav_options[goto_multi])
 
             # Try 'doing' the returned value (by index integer)
-            if not self.valid_navigator(command):
+            if not self.valid_option(command):
                 # Execute based on selection
                 self.given_list[int(command)][1] = \
                     self.flip_indicator(self.given_list[int(command)][1])

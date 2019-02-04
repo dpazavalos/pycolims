@@ -44,7 +44,7 @@ class SelectSingle(_Menu):
         # goto_multi = 0
         """Multiply by self.term_height to determine starting index"""
 
-        self.statics.clear_screen()
+        self.term.clear()
 
         selected_val = ''
         while selected_val == '':

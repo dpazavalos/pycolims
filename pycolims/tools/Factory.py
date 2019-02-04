@@ -1,19 +1,15 @@
-from pycolims.tools import _pagedata, _statics, _termsettings
+from pycolims.tools import _pagedata, _termsettings
 
 
 class Terminal(_termsettings.Terminal):
     """Generic dataclass for terminal settings"""
 
 
-class Statics(_statics.Statics):
-    """Generic dataclas for common static tools"""
-
-
 class Pages(_pagedata.Pages):
     """Generic dataclass for page settings"""
 
 
-class _Factory(_termsettings.TermFactory, _pagedata.PageFactory, _statics.StaticsFactory):
+class _Factory(_termsettings.TermFactory, _pagedata.PageFactory, ):
     """Factory to build dataclass objects"""
 
 
