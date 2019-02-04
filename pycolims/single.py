@@ -6,6 +6,11 @@ class SelectSingle(_Menu):
     """Given a list, prompt for selection of a single item\n
     Returns the selected item\n"""
 
+    def display_line(self, to_display) -> str:
+        """Used to generate items into appropriate rows"""
+        return ' '.join((f'({to_display[0]})'.rjust(5),
+                         f'{to_display[1]}'))
+
     def prep_page(self):
         """Use self.page.reset to prepare page turners"""
         self.page.reset(only_turners=[],

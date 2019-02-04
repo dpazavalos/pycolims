@@ -68,15 +68,23 @@ class _Menu:
                 print(self.header)
                 # Write options on screen
                 for disp in to_display:
-                    print(f'({disp[0]})'.rjust(5), disp[1])
+                    print(self.display_line(disp))
                 for opt in self.page.opts:
-                    print(f'({opt})'.rjust(5), self.command_check.options[opt], end=' ')
-                self.term.clear()
+                    print(self.option_line(opt), end=' ')
                 prompt = input()
             except KeyboardInterrupt:
                 # Ensure interrupts can properly pass upwards
                 prompt = self.command_check.options_inv["Break"]
+            self.term.clear()
         return prompt
+
+    def display_line(self, to_display: Union[List, Tuple]) -> str:
+        """creates a display line for displayer. Modified by menu types"""
+
+    def option_line(self, option: str) -> str:
+        """creates an option line for displayer"""
+        return ' '.join((f'{option}'.rjust(5),
+                         self.command_check.options[option]))
 
     def retype_given_list(self, to_handle: Union[list, tuple, dict]):
         """Prepare menu_in into proper type """
