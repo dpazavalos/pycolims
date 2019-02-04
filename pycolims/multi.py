@@ -1,4 +1,4 @@
-from pycolims import _Menu
+from pycolims._basemenu import _Menu
 
 
 class SelectMulti(_Menu):
@@ -12,20 +12,21 @@ class SelectMulti(_Menu):
         Sizes list according to term height, navigates pages,
         flips ( ) indicator based off displayer's return value"""
 
-        self.gen_nav_pages(only_choices=[' ', ' ', '?', '!', '..'],
-                           frst_choices=[' ', '+', '?', '!', '..'],
-                           midl_choices=['-', '+', '?', '!', '..'],
-                           last_choices=['-', ' ', '?', '!', '..'])
+        self.page.reset(only_turners=[' ', ' '],
+                        frst_turners=[' ', '+'],
+                        midl_turners=['-', '+'],
+                        last_turners=['-', ' '],
+                        page_options=['**', '!!', '..', '<>'])
 
         # Modify self.menu_list, preserving index [orig_ndx, *desired_item(s)]
+        # Bools are converted to strings T '(*)', F '( )'
         for ndx in range(len(self.given_list)):
+
             if isinstance(self.given_list[ndx], list):
                 if isinstance(self.given_list[ndx][0], bool):
-                    # True/False bool flags are converted here to visual indicators,
-                    # and returned to bools by end of run, allowing consistent passing to
-                    # self.displayer, without nested checks needed
-                    ind = '(*)' if self.given_list[ndx][0] else '( )'
-                    self.given_list[ndx] = [ndx, ind, self.given_list[ndx][1]]
+                    sbool = '(*)' if self.given_list[ndx][0] is True else '( )'
+                    self.given_list[ndx] = [ndx, sbool, self.given_list[ndx][1]]
+
             else:
                 self.given_list[ndx] = [ndx, '( )', self.given_list[ndx]]
 
