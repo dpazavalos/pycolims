@@ -13,7 +13,7 @@ class Pages:
     _midl: _List[_List[str]] = None
     _last: _List[_List[str]] = None
 
-    opts: _List[_List[str]] = None
+    opts: _List[str] = None
 
     goto_multipliers: _List[int] = None
     nav_options: MentumList = None
@@ -64,7 +64,8 @@ class Pages:
         """Middle pages Turners when items extend terminal display space"""
         self._last = self._validate_cmds(last_turners, DisplayCmd.turners)
         """Last page turners when items extend terminal display space"""
-        self.opts = self._validate_cmds(page_options, DisplayCmd.options)
+        # self.opts = self._validate_cmds(page_options, DisplayCmd.options)
+        self.opts = [cmd for cmd in page_options]
         """Navigation options for each page setup"""
 
         self.goto_multipliers = goto_multipliers

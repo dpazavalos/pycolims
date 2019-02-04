@@ -13,6 +13,7 @@ once init, use .run(given_list, header="")
 from copy import deepcopy as _deepcopy
 from typing import List, Dict, Tuple, Union
 from pycolims.tools import Factory
+from pycolims.tools.Commands import DisplayCmd
 
 
 class _Menu:
@@ -30,22 +31,17 @@ class _Menu:
 
         self.statics: Factory.Statics = Factory.build.new_statics_obj()
 
+        self.command_check = DisplayCmd()
+
     def generate_goto_multipliers(self) -> List[int]:
-        """Returns a list of valid index start places based off terminal height"""
+        """Returns a list of valid index start places based off terminal height\n
+        Used to configure page data"""
         # if 27 options but only 10 can be shown, then multipliers [0, 1, 2] for 0:9, 10:19, 20:26
         return [x for x in range(0, ((len(self.given_list) // self.term.height) + 1))]
 
-    def generate_nav_options(self, goto_multi_list: List[int]) -> List[List[List[str]]]:
-        """Return a list of nav option pages, based on # of goto_possibilities"""
-        if len(goto_multi_list) == 1:
-            return [self.page.only]
-        return [self.page.frst] + \
-               [self.page.midl for x in range(1, len(goto_multi_list)-1)] + \
-               [self.page.last]
-
-    def valid_navigator(self, nav_command: str) -> bool:
-        """Check if a char is a valid nav command"""
-        return (nav_command in self.page.cmd_turners) or (nav_command in self.page.cmd_options)
+    def valid_option(self, nav_command: str) -> bool:
+        """Check if an option is a valid bottom row option (NOT page turners!)"""
+        return nav_command in self.page.opts
 
     def displayer(self, itemlist: List[List[str]],
                   turners: List[List[str]]) -> str:
@@ -70,18 +66,21 @@ class _Menu:
 
         prompt: str = ''
         while prompt not in valid_selections:
-            print(self.header)
-            # Write options on screen
-            for disp in to_display:
-                print(f'({disp[0]})'.rjust(5), disp[1])
-            for opt in self.page.opts:
-                print(f'({opt[0]})'.rjust(5), opt[1], end=' ')
-            prompt = input()
-            self.statics.clear_screen()
+            try:
+                print(self.header)
+                # Write options on screen
+                for disp in to_display:
+                    print(f'({disp[0]})'.rjust(5), disp[1])
+                for opt in self.page.opts:
+                    print(f'({opt})'.rjust(5), self.command_check.options[opt], end=' ')
+                self.statics.clear_screen()
+            except KeyboardInterrupt:
+                # Ensure interrupts can properly pass upwards
+                prompt = self.command_check.options_inv["Break"]
         return prompt
 
     def retype_given_list(self, to_handle: Union[list, tuple, dict]):
-        """Prepare menu_in for proper sorting, based on type"""
+        """Prepare menu_in into proper type """
         if isinstance(to_handle, dict):
             self.given_list = [key for key in to_handle.keys()]
         elif isinstance(to_handle, list):
@@ -93,10 +92,11 @@ class _Menu:
         """Function to handle handoff of menu_in items to displayer\n
         This function is rewritten for each menu type"""
 
-    def run(self, given_list: Union[List[any],
-                                    List[Tuple[bool, any]],
-                                    Tuple[any],
-                                    Dict[any, any]],
+    def run(self,
+            given_list: Union[List[any],
+                              List[Tuple[bool, any]],
+                              Tuple[any],
+                              Dict[any, any]],
             header: str = "") -> Union[any,
                                        List[any],
                                        List[Tuple[bool, any]]]:

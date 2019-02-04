@@ -16,9 +16,10 @@ class DisplayCmd:
         '..': "Return Selected",
         '<>': "Break",
     }
-    """Possible menu choices to change pages \n
-    '**': "Select All" \n
-    '!!': "Clear All" \n
-    '..': "Return all Selected" \n
-    '<>'
-    """
+    """Possible menu choices to change pages"""
+
+    turners_inv = {val: key for key, val in turners.items()}
+    """Dict enforcement of page turner; call by Values"""
+
+    options_inv = {val: key for key, val in options.items()}
+    """Dict enforcement of page turner; call by Values"""

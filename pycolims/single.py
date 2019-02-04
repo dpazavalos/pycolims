@@ -8,11 +8,6 @@ class SelectSingle(_Menu):
 
     def prep_page(self):
         """Use self.page.reset to prepare page turners"""
-        '''self.page.reset(only_turners=[' ', ' '],
-                        frst_turners=[' ', '+'],
-                        midl_turners=['-', '+'],
-                        last_turners=['-', ' '],
-                        page_options=['<>'])'''
         self.page.reset(only_turners=[],
                         frst_turners=['+'],
                         midl_turners=['-', '+'],
@@ -29,6 +24,13 @@ class SelectSingle(_Menu):
             except AttributeError:
                 # item is not a list. Turn to list with index at beginning
                 self.given_list[ndx] = [ndx, self.given_list[ndx]]
+
+    def command_handler(self, command: str):
+        handler = {self.command_check.options_inv["Break"]: self._cmd_break}
+        handler[command]()
+
+    def _cmd_break(self):
+        raise KeyboardInterrupt
 
     def navigator(self):
         """Select Single Navigator
@@ -56,7 +58,7 @@ class SelectSingle(_Menu):
                 self.page.mentum(command)
 
             elif self.valid_option(command):
-                # Call command handler
+                self.command_handler(command)
                 pass
             else:
                 selected_val = self.given_list[int(command)][1::]
