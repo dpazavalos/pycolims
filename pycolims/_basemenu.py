@@ -74,6 +74,7 @@ class _Menu:
                 for opt in self.page.opts:
                     print(f'({opt})'.rjust(5), self.command_check.options[opt], end=' ')
                 self.statics.clear_screen()
+                prompt = input()
             except KeyboardInterrupt:
                 # Ensure interrupts can properly pass upwards
                 prompt = self.command_check.options_inv["Break"]
