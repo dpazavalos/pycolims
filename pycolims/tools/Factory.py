@@ -13,5 +13,9 @@ class Pages(_pagedata.Pages):
     """Generic dataclass for page settings"""
 
 
-class Factory(_termsettings.TermFactory, _pagedata.PageFactory, _statics.StaticsFactory):
+class _Factory(_termsettings.TermFactory, _pagedata.PageFactory, _statics.StaticsFactory):
     """Factory to build dataclass objects"""
+
+
+build = _Factory()
+"""Externally callable pointer to init factory"""

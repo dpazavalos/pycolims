@@ -35,5 +35,5 @@ class StaticsFactory:
     def _return_statics_obj():
         return Statics
 
-    def new_setting_obj(self):
+    def new_statics_obj(self):
         return self._return_statics_obj()

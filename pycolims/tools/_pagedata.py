@@ -1,33 +1,57 @@
 from dataclasses import dataclass as _dc
-from typing import Dict as _Dict, _List as _List, _Tuple as _Tuple
-#
+from typing import Dict as _Dict, List as _List, Tuple as _Tuple
+from pycolims.tools.Commands import DisplayCmd
+
+
 @_dc
 class Pages:
-    choices: _Dict[str, str] = {
-        ' ': " ",
-        '-': "Prev Page",
-        '+': "Next Page",
-        '?': "Select All",
-        '!': "Clear All",
-        '..': "Done"
-    }
-    """Possible Menu choices, with their appropriate call keys\n
-    Menus generate their own call setup based on Menu type and number of values to display"""
+    """External storage of page contents"""
 
-    only_page: _List[_Tuple[str]] = [None]
-    """Only nav options page when items will all fit in terminal display space\n
-    (Done, plus any others)"""
+    only: _List[str]
+    frst: _List[str]
+    midl: _List[str]
+    last: _List[str]
 
-    frst_page: _List[_Tuple[str]] = [None]
-    """First nav options page when items extend terminal display space\n
-    (Done, next page, plus any others)"""
+    opts: _List[str]
 
-    midl_page: _List[_Tuple[str]] = [None]
-    """Middle nav options pages when items extend terminal display space\n
-    (Done, prev/next page, plus any others)"""
+    @ staticmethod
+    def _validate_cmds(cmds: _List[str], valid_commands: _Dict[str, str]) -> _List[str]:
+        """Checks page cmds against valid_commands list, raises speficifc value error if not in"""
+        to_return = []
+        for c in cmds:
+            if c not in valid_commands:
+                raise ValueError(f"{c} is not in {valid_commands}!")
+            to_return.append(c)
+        return to_return
 
-    last_page: _List[_Tuple[str]] = [None]
-    """Last nav options page when items extend terminal display space \n
-    (Done, prev page, plus any others)"""
+    def reset(self,
+              only_turners: _List[str], frst_turners: _List[str],
+              midl_turners: _List[str], last_turners: _List[str],
+              page_options: _List[str]):
+        """Generic Set/Reset function. To be usd by each child menu as needed"""
 
-    def reset(self):
+        self.only = self._validate_cmds(only_turners, DisplayCmd.turners)
+        """Page Turners when items will all fit in terminal display space"""
+
+        self.frst = self._validate_cmds(frst_turners, DisplayCmd.turners)
+        """First page Turners when items extend terminal display space"""
+
+        self.midl = self._validate_cmds(midl_turners, DisplayCmd.turners)
+        """Middle pages Turners when items extend terminal display space"""
+
+        self.last = self._validate_cmds(last_turners, DisplayCmd.turners)
+        """Last page turners when items extend terminal display space"""
+
+        self.opts = self._validate_cmds(page_options, DisplayCmd.options)
+        """Navigation options for each page setup"""
+
+
+class PageFactory:
+    """Factory module to generate a Terminal object for pycolims"""
+    @staticmethod
+    def _return_pages_obj():
+        return Pages
+
+    def new_pages_obj(self):
+        pages_to_return = self._return_pages_obj()
+        return pages_to_return

@@ -4,8 +4,24 @@ from dataclasses import dataclass as _dc
 
 @_dc
 class Terminal:
-    term_height: int = _get_terminal_size()[1]
-    """Terminal height, used to determine # of items that can be displayed"""
+    """External storage of starting terminal attributes"""
 
-    term_gap: int = 3
-    """Additional gap for term height, to accommodate space for header and nav options"""
+    height: int
+    width: int
+    gap: int
+
+    def set(self):
+        self.height: int = _get_terminal_size()[1]
+        """Terminal height, used to determine # of items that can be displayed"""
+        self.gap: int = 3
+        """Additional gap for term height, to accommodate space for header and nav options"""
+
+
+class TermFactory:
+    """Factory module to generate a Terminal object for pycolims"""
+    @staticmethod
+    def _return_terminal_obj():
+        return Terminal
+
+    def new_terminal_obj(self):
+        return self._return_terminal_obj()
