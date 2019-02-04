@@ -21,7 +21,7 @@ class TermFactory:
     """Factory module to generate a Terminal object for pycolims"""
     @staticmethod
     def _return_terminal_obj():
-        return Terminal
+        return Terminal()
 
     def new_terminal_obj(self):
         to_return = self._return_terminal_obj()

@@ -51,7 +51,7 @@ class PageFactory:
     """Factory module to generate a Terminal object for pycolims"""
     @staticmethod
     def _return_pages_obj():
-        return Pages
+        return Pages()
 
     def new_pages_obj(self):
         pages_to_return = self._return_pages_obj()
