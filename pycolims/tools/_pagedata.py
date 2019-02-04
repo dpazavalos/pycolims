@@ -16,12 +16,12 @@ class Pages:
     opts: _List[_List[str]] = None
 
     goto_multipliers: _List[int] = None
-    nav_options: MentumList[_List[_List[str]]] = None
-    # goto_multi: int = 0
+    nav_options: MentumList = None
+    goto_multi: int = 0
 
     active_turners: _List[_List[str]] = None
 
-    def _generate_nav_options(self, goto_multi_list: _List[int]) -> MentumList[_List[_List[str]]]:
+    def _generate_nav_options(self, goto_multi_list: _List[int]) -> MentumList:
         """Return a list of nav option pages, based on # of goto_possibilities"""
         if len(goto_multi_list) == 1:
             return MentumList([self._only])
@@ -47,6 +47,7 @@ class Pages:
     def mentum(self, command):
         self.nav_options.mentum(cmd=command, return_val=False)
         self.active_turners = self.nav_options.get_active()
+        self.goto_multi = self.nav_options.goto
 
     def reset(self,
               only_turners: _List[str], frst_turners: _List[str],
