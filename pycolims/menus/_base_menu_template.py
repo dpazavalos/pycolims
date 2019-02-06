@@ -3,13 +3,13 @@ from typing import List, Dict, Tuple, Union
 
 class MenuTemplate:
 
-    given_list = None
+    # given_list = None
     """Menu to break and display"""
 
-    header: str = ""
+    # header: str = ""
     """Optional Header, assigned from each menu's run function"""
 
-    repeating: bool = True
+    # repeating: bool = True
     """Repeating flag used keep navigators open"""
 
     term: any = None
