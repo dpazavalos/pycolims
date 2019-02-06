@@ -1,26 +1,26 @@
-from pycolims.data import _data_pages, _data_terminal, _data_cmd, _data_work
+from pycolims.menus.data import _command, _terminal, _work, _pages
 
 
-class Command(_data_cmd.Command):
+class Command(_command.Command):
     """Generic dataclass for Commands"""
 
 
-class Pages(_data_pages.Pages):
+class Pages(_pages.Pages):
     """Generic dataclass for page settings"""
 
 
-class Terminal(_data_terminal.Terminal):
+class Terminal(_terminal.Terminal):
     """Generic dataclass for terminal settings"""
 
 
-class Work(_data_work.Work):
-    """Genric dataclass for Work hold"""
+class Work(_work.Work):
+    """Generic dataclass for Work hold"""
 
 
-class _Factory(_data_terminal.TermFactory, _data_pages.PageFactory,
-               _data_cmd.CommandFactory, _data_work.WorkFactory):
+class DataFactory(_terminal.TermFactory, _pages.PageFactory,
+                  _command.CommandFactory, _work.WorkFactory):
     """Factory to build dataclass objects"""
 
 
-build = _Factory()
+# build = _Factory
 """Externally callable pointer to init factory"""
