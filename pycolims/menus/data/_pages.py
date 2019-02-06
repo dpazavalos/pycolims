@@ -1,22 +1,21 @@
 from dataclasses import dataclass as _dc
 from typing import Dict as _Dict, List as _List
 # from pycolims.tools.Commands import Commands
-from pycolims.menus.customtypes import MentumList
+from pycolims.menus.customtypes import ListCrement
 
 
 @_dc
 class Pages:
     """External storage of page contents"""
 
-    _only: _List[str] = None
-    _frst: _List[str] = None
-    _midl: _List[str] = None
-    _last: _List[str] = None
+    frst_turners = ['+'],
+    midl_turners = ['-', '+'],
+    last_turners = ['-', ],
 
     opts: _List[str] = None
 
     goto_multipliers: _List[int] = None
-    nav_options: MentumList = None
+    nav_options: ListCrement = None
     goto_multi: int = 0
 
     active_turners: _List[str] = None
@@ -43,18 +42,17 @@ class Pages:
         """Mentum List of all page nav options"""
         self.active_turners = self.nav_options.get_active()
 
-    def _generate_nav_options(self, goto_multi_list: _List[int]) -> MentumList:
+    def _generate_nav_options(self, goto_multi_list: _List[int]) -> ListCrement:
         """Return a list of nav option pages, based on # of goto_possibilities"""
         if len(goto_multi_list) == 1:
-            return MentumList([[' ']])
-        frst_turners = ['+'],
-        midl_turners = ['-', '+'],
-        last_turners = ['-', ],
-        return MentumList([
-            ['+'],
-            [['-', '+'] for x in range(1, len(goto_multi_list) - 1)],
-            ['-']
-        ])
+            return ListCrement(self.frst_turners)
+
+        else:
+            to_crement = self.frst_turners
+            for x in range(len(goto_multi_list) - 2):
+                to_crement += self.midl_turners
+            to_crement += self.last_turners
+            return ListCrement(to_crement)
 
     def is_valid_navigator(self, nav_command: str) -> bool:
         """Check if a char is a valid nav command"""
@@ -72,9 +70,9 @@ class Pages:
         return [[cmd, valid_commands[cmd]] for cmd in to_return]
 
     def mentum(self, command):
-        self.nav_options.mentum(cmd=command, return_val=False)
+        self.nav_options.crement(crementer=command)
         self.active_turners = self.nav_options.get_active()
-        self.goto_multi = self.nav_options.goto
+        self.goto_multi = self.nav_options.ndx
 
 
 class PageFactory:

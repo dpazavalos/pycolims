@@ -12,6 +12,9 @@ class Command(MenuTemplate):
     turners_inv: dict = None
     options_inv: dict = None
 
+    single_def: list = None
+    multi_def: list = None
+
     def set(self):
         self.turners = {
             ' ': " ",
@@ -21,9 +24,10 @@ class Command(MenuTemplate):
         """Possible menu choices to change pages"""
         self.options = {
             '**': "Select All",
-            '!!': "Clear All",
+            '//': "Clear All",
+            '><': "Flip All",
             '..': "Return Selected",
-            '<>': "Break",
+            '!!': "Break",
         }
         """Possible menu choices to change pages"""
         self.turners_inv = {val: key for key, val in self.turners.items()}
@@ -31,6 +35,18 @@ class Command(MenuTemplate):
         self.options_inv = {val: key for key, val in self.options.items()}
         """Dict enforcement of page turner; call by Values"""
 
+        self.single_def = [
+            self.options_inv["Break"],
+        ]
+        """default options keys for single menus"""
+        self.multi_def = [
+            self.options_inv["Select All"],         # **
+            self.options_inv["Clear All"],          # //
+            self.options_inv["Flip All"],           # ><
+            self.options_inv["Return Selected"],    # ..
+            self.options_inv["Break"]               # !!
+        ]
+        """default options keys for multi menus"""
 
 class CommandFactory:
     """Factory module to generate a Command obj for Pycolims"""
