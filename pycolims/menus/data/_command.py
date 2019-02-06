@@ -16,6 +16,8 @@ class Command(MenuTemplate):
     multi_def: list = None
 
     def set(self):
+        """Set command obj stats"""
+        # Phase obj to frozen dataclass, and move set to local CommandFactory?
         self.turners = {
             ' ': " ",
             '-': "Prev Page",

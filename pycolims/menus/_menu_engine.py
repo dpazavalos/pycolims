@@ -25,8 +25,8 @@ class MenuEngine(MenuTemplate):
         self.page: df.Pages = self.build.new_pages_obj()
         
         self._handler = {
-            self.command.turners_inv["Prev Page"]: self._cmd_mentum_d,
-            self.command.turners_inv["Next Page"]: self._cmd_mentum_i,
+            self.command.turners_inv["Prev Page"]: self._cmd_page_dec,
+            self.command.turners_inv["Next Page"]: self._cmd_page_inc,
             self.command.options_inv["Select All"]: self._cmd_sel,
             self.command.options_inv["Clear All"]: self._cmd_clr,
             self.command.options_inv["Flip All"]: self._cmd_flip,
@@ -111,13 +111,13 @@ class MenuEngine(MenuTemplate):
     def command_handler(self, command: str):
         self._handler[command]()
 
-    def _cmd_mentum_d(self):
-        """Mentum increment command caller"""
-        self.page.mentum('-')
+    def _cmd_page_dec(self):
+        """Send crement decreaser to page, to then send to listcrement obj"""
+        self.page.crement('-')
 
-    def _cmd_mentum_i(self):
-        """Mentum increment command caller"""
-        self.page.mentum('+')
+    def _cmd_page_inc(self):
+        """Send crement increaser to page, to then send to listcrement obj"""
+        self.page.crement('+')
 
     def _cmd_sel(self):
         """Set all booleans to True"""
