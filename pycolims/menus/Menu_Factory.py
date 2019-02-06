@@ -1,4 +1,4 @@
-from pycolims.data import _menu_single, _menu_multi
+from pycolims.menus import _menu_single, _menu_multi
 
 
 class SingleMenu(_menu_single.SelectSingle):
@@ -13,20 +13,16 @@ class MultiMenu(_menu_multi.SelectMulti):
     Once init, call run()"""
 
 
-class _Factory(_menu_single.SelectSingleFactory, _menu_multi.SelectMutliFactory):
-    """Generic Factory obj"""
+class _FactorySingle(_menu_single.SelectSingleFactory, ):
+    """Importable single menu builder"""
 
 
-build = _Factory()
+class _FactoryMulti(_menu_multi.SelectMutliFactory, ):
+    """Importable multi menu builder"""
+
+
+build_single = _FactorySingle()
 """Externally callable pointer to init factory"""
 
-
-class Single:
-    @staticmethod
-    def run(list_to_give):
-        to_run = build.new_single_menu_obj()
-        return to_run.run(list_to_give)
-
-
-def multi_run(list_to_give):
-    return build.new_multi_menu_obj(list_to_give).run()
+build_multi = _FactoryMulti()
+"""Externally callable pointer to init factory"""
