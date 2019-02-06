@@ -48,6 +48,7 @@ class Command(MenuTemplate):
         ]
         """default options keys for multi menus"""
 
+
 class CommandFactory:
     """Factory module to generate a Command obj for Pycolims"""
 
