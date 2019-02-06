@@ -1,5 +1,5 @@
-from pycolims.data.customtypes import _mentumList
+from pycolims.menus.customtypes import _list_crement
 
 
-class MentumList(_mentumList.MentumList):
+class ListCrement(_list_crement.ListCrement):
     """"""
