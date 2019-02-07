@@ -27,7 +27,7 @@ class Pages:
         self.goto_multipliers = goto_multipliers
         """List of valid goto multipliers, based on list length and terminal height"""
         self.nav_options = self._generate_nav_options(self.goto_multipliers)
-        """Mentum List of all page nav options"""
+        """Cremental List of all page nav options"""
         self.active_turners = self.nav_options.get_active()
 
     def _generate_nav_options(self, goto_multi_list: _List[int]) -> CrementalList:
