@@ -20,10 +20,11 @@ class MenuEngine(MenuTemplate):
 
         self.build = df.DataFactory()
 
-        self.command: df.Command = self.build.new_command_obj()
         self.term: df.Terminal = self.build.new_terminal_obj()
+        self.work: df.Work = self.build.new_work_obj()
         self.page: df.Pages = self.build.new_pages_obj()
-        
+        self.command: df.Command = self.build.new_command_obj()
+
         self._handler = {
             self.command.turners_inv["Prev Page"]: self._cmd_page_dec,
             self.command.turners_inv["Next Page"]: self._cmd_page_inc,
@@ -155,7 +156,11 @@ class MenuEngine(MenuTemplate):
                                        List[any],
                                        List[Tuple[bool, any]]]:
 
-        self.work: df.Work = self.build.new_work_obj(given_list, header)
+        # Set work storage modules with new info
+        self.work.set(given_list, header)
+        # Set terminal to most recent size
+        self.term.set()
+        # Reset work data storage
         
         """Given a list, prompt for selection of item or items in a list.\n
         Returns a list with nested booleans indicating if selected or not\n

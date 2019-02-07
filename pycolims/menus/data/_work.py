@@ -39,7 +39,6 @@ class WorkFactory:
     def _return_work_obj():
         return Work()
 
-    def new_work_obj(self, list_to_give, header):
+    def new_work_obj(self):
         to_return = self._return_work_obj()
-        to_return.set(list_to_give, header)
         return to_return

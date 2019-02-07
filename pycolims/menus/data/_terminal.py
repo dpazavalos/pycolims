@@ -41,5 +41,4 @@ class TermFactory:
 
     def new_terminal_obj(self):
         to_return = self._return_terminal_obj()
-        to_return.set()
         return to_return
