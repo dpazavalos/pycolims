@@ -1,6 +1,6 @@
 from dataclasses import dataclass as _dc
 from typing import List as _List
-from pycolims.menus.customtypes import ListCrement
+from pycolims.menus.customtypes import CrementalList
 
 
 @_dc
@@ -14,7 +14,7 @@ class Pages:
     opts: _List[str] = None
 
     goto_multipliers: _List[int] = None
-    nav_options: ListCrement = None
+    nav_options: CrementalList = None
     goto_multi: int = 0
 
     active_turners: _List[str] = None
@@ -30,20 +30,20 @@ class Pages:
         """Mentum List of all page nav options"""
         self.active_turners = self.nav_options.get_active()
 
-    def _generate_nav_options(self, goto_multi_list: _List[int]) -> ListCrement:
+    def _generate_nav_options(self, goto_multi_list: _List[int]) -> CrementalList:
         """Return a list of nav option pages, based on # of goto_possibilities"""
         if len(goto_multi_list) == 1:
-            return ListCrement(self.frst_turners)
+            return CrementalList(self.frst_turners)
 
         else:
             to_crement = self.frst_turners
             for x in range(len(goto_multi_list) - 2):
                 to_crement += self.midl_turners
             to_crement += self.last_turners
-            return ListCrement(to_crement)
+            return CrementalList(to_crement)
 
     def crement(self, key):
-        """pass key to listcrement obj holding turners, reset active_turners and multiplier"""
+        """pass key to CrementalList obj holding turners, reset active_turners and multiplier"""
         self.nav_options.crement(crementer=key)
         self.active_turners = self.nav_options.get_active()
         self.goto_multi = self.nav_options.ndx

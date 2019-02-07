@@ -1,5 +1,5 @@
-from pycolims.menus.customtypes import _list_crement
+from pycolims.menus.customtypes import _cremental_list
 
 
-class ListCrement(_list_crement.ListCrement):
+class CrementalList(_cremental_list.CrementalList):
     """"""

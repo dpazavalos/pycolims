@@ -12,7 +12,7 @@ crement(cmd: str, return_value=False) -> Optional[int]:
 """
 
 
-class ListCrement(list):
+class CrementalList(list):
     """Extention of default list obj. Adds a tracking index for an 'active' item"""
 
     ndx: int = 0
