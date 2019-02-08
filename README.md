@@ -1,52 +1,87 @@
 # Python Command Line Menu Selector (PyCoLiMS)
-A command line interface single stage menu system, designed to display a given list on screen and prompt the user to select from said list. Returns the selected item/s to the calling function in the same format as provided*
+A command line menu, designed for single stage selection.
+Displays a given list on screen for user to select, either in single or multi mode.
+Returns selected item/s to the calling function in the same format as provided.
 
-In the case of very large lists, PyCoLiMS breaks** the list down into terminal-sized chunks with a paging system, allowing lists larger than the screen to be processed without issue
+If given a dictionary, pycolims will return key/s, allowing easy user input to call a dict value
 
-Has single and multiple selection modes.
+In the case of lists too large to display at once, pycolims breaks the list down into terminal-sized
+ chunks, with a paging system to cycle between the chunks 
 
-\* A note on Dictionaries: PyCoLiMS displays and returns only the keys of a dictionary. This allows easy user input to call a dict value
-
-\*\* It's a series of pointers, not a bunch of new lists. PyCoLiMS tries to stay mem friendly!
+\* It's a series of pointers, not a bunch of new lists. Pycolims tries to stay memory friendly!
 	
-### installation
+### Installation
 
-    pip install pycolims
+```
+pip install pycolims
+```
 
 ### Single Selection menu
 
-    import pycolims
-    menu_single = pycolims.SelectSingle()
-    menu_single.run(array_in: Union[List[any], 
-                                    Tuple[any], 
-                                    Dict[any, any]], 
-                    header: str="") -> Union[any, 
-                                             List[any]]
+```python
+import pycolims
+menu_single = pycolims.Single()
+menu_single.run(array_in, header: str="")
+```
 
-Single selection menu returns the one item selected from array_in. This can be a single item or one nested list from array_in. 
+A single selection menu will display items on screen and return a single user selected value
+This can be a single item or one nested list from a given matrix 
 
+### Multi Selection Menu
+```python
+import pycolims
+menu_multi = pycolims.Multi()
+menu_multi.run(array_in, header: str="")
+```
 
-### Multi Seletion Menu
+When a multi pycolims is used, the menu returns the entire given array with each item converted to 
+a list, where [0] is a boolean indicating selection
+ 
+```python
+ >>> list_with_booleans = menu_multi.run([0, 1, '2'])
+ # User selects first and last options...
+ >>> print(list_with_booleans)
+ [[True, 0], [False, 1], [True, '2']]
+```
 
-    import pycolims
-    menu_multi = pycolims.SelectMulti()
-    menu_multi.run(array_in: Union[List[any], 
-                                   List[List[bool, any]],
-                                   Tuple[any], 
-                                   Dict[any, any]], 
-                    header: str="") -> List[List[bool, any]])
+Multi pycolims can also parse a given list in similar format to display items 'already selected'
+ 
+```python
+prev_settings = [[True, 'val_one'], 
+                 [False, 'val_two']]
+```
 
-A note on SelectMulti: the multiple selection menu returns the entire array given to it with an embedded boolean prefixing each given item, indicating menu selection status. 
+#### Pycolims menu options
 
-     print([val for [val, boolean] in menu_multi.run(arr) if boolean])
+Each pycolims menu has a series of commands at the bottom
 
-Also of note, SelectMulti is able to parse a given list in the same format, allowing a menu to start with values already indicated
+    Single menu options
+      (-) Prev Page
+      (+) Next Page
+      (!!) Break
 
-    prev_settings = [[True, val_one], 
-                     [False, val_two]]
+    Multi Menu Options
+      (-) Prev Page
+      (+) Next Page
+      (**) Select All (//) Clear All (><) Flip All (..) Return Selected (!!) Break
 
+(-) Prev Page
+(+) Next Page
 
-### Final notes
+Cycles through available pages
 
-This project is still quite young; notable ToDos include wider type acceptance and confirmed stress testing.
-Any and all feedback is appreciated!
+(!!) Break
+
+Easy back out for end user use; throws a Keyboard interrupt error to interrupt code
+
+(**) Select All (//) Clear All
+
+Selects/Clears ALL available items
+
+(><) Flip All
+
+Inverts all item selections
+
+(..) Return Selected
+
+Finishes a multi selection menu and returns items
