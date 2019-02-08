@@ -23,10 +23,7 @@ class Command:
 
     _frozen: bool = False
 
-    def set(self):
-        """Set command obj stats"""
-
-        self._frozen = False
+    def __init__(self):
 
         self.turners = {
             ' ': " ",
@@ -61,6 +58,7 @@ class Command:
         """default options keys for multi menus"""
 
         self._frozen = True
+        """Lock attributes after init"""
 
     def __setattr__(self, item, value):
         """Pre 3.7 emulation of frozen dataclasses. Soft mutation prevention"""
@@ -84,5 +82,4 @@ class CommandFactory:
 
     def new_command_obj(self):
         to_return = self._return_command_obj()
-        to_return.set()
         return to_return
