@@ -34,6 +34,7 @@ class MenuEngine(MenuTemplate):
             self.command.options_inv["Return Selected"]: self._cmd_ret,
             self.command.options_inv["Break"]: self._cmd_break,
         }
+        """Handler for command keys. Used to access command functions"""
 
     def generate_goto_multipliers(self) -> List[int]:
         """Returns a list of valid index start places based off terminal height\n
@@ -45,7 +46,6 @@ class MenuEngine(MenuTemplate):
         """Called by a Navigator function, displays a given list on screen, along with nav options\n
         Selected option must be one shown on screen"""
         to_display: List[Union[List, Tuple]] = []       # ["0", "a"], items to display
-        current_turners: List[str] = []
         valid_selections: List[str] = []                # String'd int entries for menu Values
 
         for item in itemlist:
@@ -53,7 +53,6 @@ class MenuEngine(MenuTemplate):
             valid_selections.append(str(item[0]))       # ["0", "a"]
 
         for turner in self.page.active_turners:
-            current_turners.append(turner)
             if turner != " ":
                 valid_selections.append(turner)
 
@@ -64,15 +63,9 @@ class MenuEngine(MenuTemplate):
         while prompt not in valid_selections:
             self.term.clear()
 
-            print(self.header)
-            # for item in to_display:
-            #     print(self.display_line(item))
+            print(self.work.header)
             self.display_line(to_display)
-            # for turn in current_turners:
-            #     print(self.display_line([turn, self.command.turners[turn]]))
             self.display_turners()
-            # for opt in self.page.opts:
-            #     print(self.option_line(opt), end=' ')
             self.display_opts()
             print()
 
@@ -81,28 +74,20 @@ class MenuEngine(MenuTemplate):
             except KeyboardInterrupt:
                 prompt = self.command.options_inv["Break"]
 
-        # self.term.clear()
         return prompt
 
     def display_line(self, to_display: List[List[any]]):
-        """Generic function for item line display"""
+        """Generic function for item line display. Modified by each child menu type"""
 
     def display_turners(self):
-        """"""
+        """Display active page turners in separate lines"""
         for turn in self.page.active_turners:
             print(f'({turn})'.rjust(5), self.command.turners[turn])
 
     def display_opts(self):
-        # [[opt, self.command.turners[opt]] for opt in self.page.opts]
+        """Display active options at bottom row"""
         for opt in self.page.opts:
             print(f'({opt})'.rjust(5), self.command.options[opt], end='')
-
-    def OLD_display_line(self, to_display: Union[List, Tuple]) -> str:
-        displayed = f'{to_display[0]} '
-        for ndx, each in enumerate(to_display):
-            if ndx != 0:
-                displayed += f'{each} '
-        return displayed
 
     def option_line(self, option: str) -> str:
         """creates an option line for displayer"""
@@ -158,13 +143,7 @@ class MenuEngine(MenuTemplate):
 
         # Set work storage modules with new info
         self.work.set(given_list, header)
-        # Set terminal to most recent size
+        # Set terminal info to most recent status
         self.term.set()
-        # Reset work data storage
-        
-        """Given a list, prompt for selection of item or items in a list.\n
-        Returns a list with nested booleans indicating if selected or not\n
-        [item for [boolean, item] in menu.run(menu_in) if boolean]"""
-        # self.retype_given_list(given_list)
-        self.header = header
+
         return self.navigator()

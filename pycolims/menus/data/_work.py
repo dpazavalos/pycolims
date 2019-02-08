@@ -1,17 +1,16 @@
 """Separate SubObject for menus, to hold working data"""
-from dataclasses import dataclass as _dc
 from copy import deepcopy as _deepcopy
 from typing import Union as _Union
 
 
-@_dc
 class Work:
     given_list = None
     repeating = None
     header: str = None
 
     def set(self, list_to_give, header):
-        """"""
+        """Prepare working data for processing"""
+
         self.given_list = self.retype_given_list(list_to_give)
         """Menu to break and display"""
 

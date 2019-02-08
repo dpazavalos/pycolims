@@ -1,4 +1,4 @@
-"""Extention of default list obj. Adds a tracking index for an 'active' item
+"""Extension of default list obj. Adds a tracking index for an 'active' item
 
 get_active() -> any:
     Returns item from list using active ndx

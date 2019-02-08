@@ -19,7 +19,7 @@ class Work(_work.Work):
 
 class DataFactory(_terminal.TermFactory, _pages.PageFactory,
                   _command.CommandFactory, _work.WorkFactory):
-    """Factory to build dataclass objects"""
+    """Factory to build dataclass-like objects"""
 
 
 # build = _Factory

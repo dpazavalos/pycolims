@@ -1,11 +1,17 @@
-"""Commands used by navigator"""
+"""Commands used by navigator.
+Pycolims uses the key characters to function; string values are for on screen representation
 
-from pycolims.menus._base_menu_template import MenuTemplate
+Command.set()
+    Sets command options"""
+
+# from pycolims.menus._base_menu_template import MenuTemplate
 # Command requires knowledge of some base menu functions. Import template to match plans when
 # loaded into Factory generated menu
 
 
-class Command(MenuTemplate):
+class Command:
+    """External storage of string command keys to full names.
+    Default command options for child menus"""
 
     turners: dict = None
     options: dict = None
@@ -15,9 +21,13 @@ class Command(MenuTemplate):
     single_def: list = None
     multi_def: list = None
 
+    _frozen: bool = False
+
     def set(self):
         """Set command obj stats"""
-        # Phase obj to frozen dataclass, and move set to local CommandFactory?
+
+        self._frozen = False
+
         self.turners = {
             ' ': " ",
             '-': "Prev Page",
@@ -49,6 +59,20 @@ class Command(MenuTemplate):
             self.options_inv["Break"]               # !!
         ]
         """default options keys for multi menus"""
+
+        self._frozen = True
+
+    def __setattr__(self, item, value):
+        """Pre 3.7 emulation of frozen dataclasses. Soft mutation prevention"""
+        if self._frozen:
+            raise SyntaxError("Consider Command obj immutable, do not modify!")
+        self.__dict__[item] = value
+
+    def __delattr__(self, item):
+            """Pre 3.7 emulation of frozen dataclasses. Soft mutation prevention"""
+            if self._frozen:
+                raise SyntaxError("Consider Command obj immutable, do not modify!")
+            del self.__dict__[item]
 
 
 class CommandFactory:

@@ -1,10 +1,11 @@
+"""Storge of terminal settings.
+Note that without curves, windows terminal-ing is limited. Terminal size will only set on startup"""
+
 from shutil import get_terminal_size as _get_terminal_size
-from dataclasses import dataclass as _dc
 from subprocess import call as _sp_call
 from os import name as _os_name
 
 
-@_dc
 class Terminal:
     """External storage of starting terminal attributes"""
 

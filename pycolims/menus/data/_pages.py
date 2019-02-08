@@ -1,15 +1,17 @@
-from dataclasses import dataclass as _dc
+"""External storage of necessary page turners ('+','-')"""
+
 from typing import List as _List
 from pycolims.menus.customtypes import CrementalList
 
 
-@_dc
 class Pages:
-    """External storage of page contents"""
+    """External storage of necessary page turners ('+','-'), based on terminal size.
+    Stores list of possible page turners and active turners in CrementalList"""
 
     frst_turners = ['+'],
     midl_turners = ['-', '+'],
     last_turners = ['-', ],
+    none_turners = [' ']
 
     opts: _List[str] = None
 
@@ -20,7 +22,7 @@ class Pages:
     active_turners: _List[str] = None
 
     def set(self, page_options: _List[str], goto_multipliers: _List[int]):
-        """Generic Set/Reset function. To be usd by each child menu as needed"""
+        """Generic Set/Reset function. To be set-reset by each child menu on their runs"""
 
         self.opts = [cmd for cmd in page_options]
         """Navigation options for each page setup"""
@@ -33,7 +35,7 @@ class Pages:
     def _generate_nav_options(self, goto_multi_list: _List[int]) -> CrementalList:
         """Return a list of nav option pages, based on # of goto_possibilities"""
         if len(goto_multi_list) == 1:
-            return CrementalList(self.frst_turners)
+            return CrementalList(self.none_turners)
 
         else:
             to_crement = self.frst_turners
