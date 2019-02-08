@@ -1,0 +1,11 @@
+.idea
+test.py
+pycolims\menus\__pycache__\Menu_Factory.cpython-37.pyc
+pycolims\menus\__pycache__\_data_cmd.cpython-37.pyc
+pycolims\menus\__pycache__\_data_pages.cpython-37.pyc
+pycolims\menus\__pycache__\_data_terminal.cpython-37.pyc
+pycolims\menus\__pycache__\_data_zFactory.cpython-37.pyc
+menus\__pycache__\_menu_engine.cpython-37.pyc
+menus\__pycache__\_menu_multi.cpython-37.pyc
+menus\__pycache__\_menu_single.cpython-37.pyc
+

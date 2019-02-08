@@ -1,6 +1,3 @@
-from typing import List, Union, Tuple, Dict
-x: List[any] = []
-
 import setuptools
 
 with open("README.md", 'r') as readme:
@@ -8,15 +5,15 @@ with open("README.md", 'r') as readme:
 
 setuptools.setup(
     name="pycolims",
-    version="0.1.1",
+    version="0.2.0",
     author="Daniel Paz Avalos",
     author_email="dpazavalos@protonmail.com",
     description="An importable, single stage CLI menu package",
     long_description=long_desc,
     long_description_content_type="text/markdown",
-    url="https://github.com/daniel-avalos/PyCoLiMS",
+    url="https://github.com/dpazavalos/pycolims",
     packages=setuptools.find_packages(),
-    classifiers=["Programming Language :: Python :: 3",
+    classifiers=["Programming Language :: Python :: 3.5",
                  "License :: OSI Approved :: MIT License",
                  "Operating System :: OS Independent"],
 )
