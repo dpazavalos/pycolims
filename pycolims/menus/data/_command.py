@@ -1,12 +1,7 @@
 """Commands used by navigator.
 Pycolims uses the key characters to function; string values are for on screen representation
-
-Command.set()
-    Sets command options"""
-
-# from pycolims.menus._base_menu_template import MenuTemplate
-# Command requires knowledge of some base menu functions. Import template to match plans when
-# loaded into Factory generated menu
+Emulation of 3.7 frozen dataclasses.
+Once init, set/del function calls will throw SyntaxError to enforce soft immutability"""
 
 
 class Command:
@@ -74,7 +69,7 @@ class Command:
 
 
 class CommandFactory:
-    """Factory module to generate a Command obj for Pycolims"""
+    """Factory module to generate a Command obj for pycolims"""
 
     @staticmethod
     def _return_command_obj():
