@@ -1,12 +1,7 @@
 """Commands used by navigator.
 Pycolims uses the key characters to function; string values are for on screen representation
-
-Command.set()
-    Sets command options"""
-
-# from pycolims.menus._base_menu_template import MenuTemplate
-# Command requires knowledge of some base menu functions. Import template to match plans when
-# loaded into Factory generated menu
+Emulation of 3.7 frozen dataclasses.
+Once init, set/del function calls will throw SyntaxError to enforce soft immutability"""
 
 
 class Command:
@@ -23,10 +18,7 @@ class Command:
 
     _frozen: bool = False
 
-    def set(self):
-        """Set command obj stats"""
-
-        self._frozen = False
+    def __init__(self):
 
         self.turners = {
             ' ': " ",
@@ -61,6 +53,7 @@ class Command:
         """default options keys for multi menus"""
 
         self._frozen = True
+        """Lock attributes after init"""
 
     def __setattr__(self, item, value):
         """Pre 3.7 emulation of frozen dataclasses. Soft mutation prevention"""
@@ -76,7 +69,7 @@ class Command:
 
 
 class CommandFactory:
-    """Factory module to generate a Command obj for Pycolims"""
+    """Factory module to generate a Command obj for pycolims"""
 
     @staticmethod
     def _return_command_obj():
@@ -84,5 +77,4 @@ class CommandFactory:
 
     def new_command_obj(self):
         to_return = self._return_command_obj()
-        to_return.set()
         return to_return
