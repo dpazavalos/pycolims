@@ -4,17 +4,9 @@ Emulation of 3.7 frozen dataclasses.
 Once init, set/del function calls will throw SyntaxError to enforce soft immutability"""
 
 
-class Command:
+class DataCommands:
     """External storage of string command keys to full names.
     Default command options for child menus"""
-
-    turners: dict = None
-    options: dict = None
-    turners_inv: dict = None
-    options_inv: dict = None
-
-    single_def: list = None
-    multi_def: list = None
 
     _frozen: bool = False
 
@@ -23,7 +15,7 @@ class Command:
         self.turners = {
             ' ': " ",
             '-': "Prev Page",
-            '+': "Next Page",
+            '+': "Next Page"
         }
         """Possible menu choices to change pages"""
         self.options = {
@@ -58,22 +50,22 @@ class Command:
     def __setattr__(self, item, value):
         """Pre 3.7 emulation of frozen dataclasses. Soft mutation prevention"""
         if self._frozen:
-            raise SyntaxError("Consider Command obj immutable, do not modify!")
+            raise SyntaxError("Consider DataCommands obj immutable, do not modify!")
         self.__dict__[item] = value
 
     def __delattr__(self, item):
             """Pre 3.7 emulation of frozen dataclasses. Soft mutation prevention"""
             if self._frozen:
-                raise SyntaxError("Consider Command obj immutable, do not modify!")
+                raise SyntaxError("Consider DataCommands obj immutable, do not modify!")
             del self.__dict__[item]
 
 
 class CommandFactory:
-    """Factory module to generate a Command obj for pycolims"""
+    """Factory module to generate a DataCommands obj for pycolims"""
 
     @staticmethod
     def _return_command_obj():
-        return Command()
+        return DataCommands()
 
     def new_command_obj(self):
         to_return = self._return_command_obj()

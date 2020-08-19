@@ -2,28 +2,18 @@
 of menu functions"""
 
 from typing import List, Dict, Tuple, Union
-from pycolims.menus.data import data_factory as df
-
-from pycolims.menus._base_menu_template import MenuTemplate
+from pycolims.menus.data import *
 
 
-class MenuEngine(MenuTemplate):
+class MenuEngine:
     """Template with set functions to build menus"""
-
-    term: df.Terminal = None
-    page: df.Pages = None
-    command: df.Command = None
-    work: df.Work = None
-    _handler: dict = None
 
     def __init__(self):
 
-        self.build = df.DataFactory()
-
-        self.term: df.Terminal = self.build.new_terminal_obj()
-        self.work: df.Work = self.build.new_work_obj()
-        self.page: df.Pages = self.build.new_pages_obj()
-        self.command: df.Command = self.build.new_command_obj()
+        self.term = DataTerminal()
+        self.page = DataPages()
+        self.command = DataCommands()
+        self.work = DataInput()
 
         self._handler = {
             self.command.turners_inv["Prev Page"]: self._cmd_page_dec,
@@ -37,14 +27,15 @@ class MenuEngine(MenuTemplate):
         """Handler for command keys. Used to access command functions"""
 
     def generate_goto_multipliers(self) -> List[int]:
-        """Returns a list of valid index start places based off terminal height\n
+        """Returns a list of valid index start places based off terminal height
         Used to configure page data"""
-        # if 27 options but only 10 can be shown, then multipliers [0, 1, 2] for 0:9, 10:19, 20:26
+        # if 27 options but only 10 can be shown,
+        #  then multipliers [0, 1, 2] for 0:9, 10:19, 20:26
         return [x for x in range(0, ((len(self.work.given_list) // self.term.height) + 1))]
 
     def displayer(self, itemlist: List[List[str]]) -> str:
-        """Called by a Navigator function, displays a given list on screen, along with nav options\n
-        Selected option must be one shown on screen"""
+        """Called by a Navigator function, displays a given list on screen,
+        along with nav options. Selected option must be one shown on screen"""
         to_display: List[Union[List, Tuple]] = []       # ["0", "a"], items to display
         valid_selections: List[str] = []                # String'd int entries for menu Values
 
@@ -77,7 +68,8 @@ class MenuEngine(MenuTemplate):
         return prompt
 
     def display_line(self, to_display: List[List[any]]):
-        """Generic function for item line display. Modified by each child menu type"""
+        """Generic function for item line display. Inherited by
+        child obj"""
 
     def display_turners(self):
         """Display active page turners in separate lines"""
@@ -140,6 +132,9 @@ class MenuEngine(MenuTemplate):
             header: str = "") -> Union[any,
                                        List[any],
                                        List[Tuple[bool, any]]]:
+        """Given a list, prompt for selection of item or items in a list.\n
+        Returns a list with nested booleans indicating if selected or not\n
+        [item for [boolean, item] in menu.run(menu_in) if boolean]"""
 
         # Set work storage modules with new info
         self.work.set(given_list, header)

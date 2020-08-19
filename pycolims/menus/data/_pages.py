@@ -4,8 +4,8 @@ from typing import List as _List
 from pycolims.menus.customtypes import CrementalList
 
 
-class Pages:
-    """External storage of necessary page turners ('+','-'), based on terminal size.
+class DataPages:
+    """External storage of necessary page turners ('+','-'), based on term size
     Stores list of possible page turners and active turners in CrementalList"""
 
     frst_turners = ['+'],
@@ -30,7 +30,7 @@ class Pages:
         self.opts = [cmd for cmd in page_options]
         """Navigation options for each page setup"""
         self.goto_multipliers = goto_multipliers
-        """List of valid goto multipliers, based on list length and terminal height"""
+        """List of valid goto multipliers, based on list len and term height"""
         self.nav_options = self._generate_nav_options(self.goto_multipliers)
         """Cremental List of all page nav options"""
         self.active_turners = self.nav_options.get_active()
@@ -55,10 +55,10 @@ class Pages:
 
 
 class PageFactory:
-    """Factory module to generate a Terminal object for pycolims"""
+    """Factory module to generate a DataTerminal object for pycolims"""
     @staticmethod
     def _return_pages_obj():
-        return Pages()
+        return DataPages()
 
     def new_pages_obj(self):
         pages_to_return = self._return_pages_obj()

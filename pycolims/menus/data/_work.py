@@ -3,7 +3,7 @@ from copy import deepcopy as _deepcopy
 from typing import Union as _Union
 
 
-class Work:
+class DataInput:
     given_list = None
     repeating = None
     header: str = None
@@ -32,11 +32,11 @@ class Work:
 
 
 class WorkFactory:
-    """Factory module to generate a Command obj for Pycolims"""
+    """Factory module to generate a DataCommands obj for Pycolims"""
 
     @staticmethod
     def _return_work_obj():
-        return Work()
+        return DataInput()
 
     def new_work_obj(self):
         to_return = self._return_work_obj()

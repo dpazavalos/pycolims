@@ -1,12 +1,12 @@
 """Storge of terminal settings.
-Note that without curves, windows terminal-ing is limited. Terminal size will only set on startup"""
+Note that without curves, windows terminal-ing is limited. DataTerminal size will only set on startup"""
 
 from shutil import get_terminal_size as _get_terminal_size
 from subprocess import call as _sp_call
 from os import name as _os_name
 
 
-class Terminal:
+class DataTerminal:
     """External storage of starting terminal attributes"""
 
     height: int = None
@@ -19,7 +19,7 @@ class Terminal:
         self.gap: int = 5
         """Additional gap for term height, to accommodate space for header and nav options"""
         self.height: int = _get_terminal_size()[1] - self.gap
-        """Terminal height, used to determine # of items that can be displayed"""
+        """DataTerminal height, used to determine # of items that can be displayed"""
 
         self._set_clear_method()
 
@@ -35,10 +35,10 @@ class Terminal:
 
 
 class TermFactory:
-    """Factory module to generate a Terminal object for pycolims"""
+    """Factory module to generate a DataTerminal object for pycolims"""
     @staticmethod
     def _return_terminal_obj():
-        return Terminal()
+        return DataTerminal()
 
     def new_terminal_obj(self):
         to_return = self._return_terminal_obj()

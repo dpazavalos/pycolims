@@ -44,7 +44,7 @@ class SelectMulti(MenuEngine):
             disp_start = self.page.goto_multi * self.term.height
 
             command = self.displayer(self.work.given_list[disp_start:disp_start+self.term.height])
-            '''Command is the returned from displayer, either a nav option or an item to trigger'''
+            '''DataCommands is the returned from displayer, either a nav option or an item to trigger'''
 
             try:
                 self.command_handler(command)
